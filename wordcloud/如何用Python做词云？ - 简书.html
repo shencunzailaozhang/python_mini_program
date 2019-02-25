@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 7]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<!--[if !IE]><!--> <html> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width"/>
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="mobile-agent" content="format=html5;url=https://www.jianshu.com/p/e4b24a734ccc">
+  <!-- End of Baidu Transcode -->
+
+    <meta name="description"  content="临渊羡鱼，不如退而结网。我们步步为营，从头开始帮助你用Python做出第一张词云图来。欢迎尝试哦！ 在大数据时代，你经常可以在媒体或者网站上看到一些非常漂亮的信息图。 例如这个样子。 看过之后你有什么感觉？想不想自己做一张出来？ 如果你的答案是肯定的，我们就不要拖延了，现在就开始，做个词云分析图。当然，做为基础的词云图，肯定比不上刚才那两张信息图酷炫。不过不要紧，好的开始是成功的一半。食髓知...">
+
+  <meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8" />
+  <meta property="wb:webmaster" content="294ec9de89e7fadb" />
+  <meta property="qc:admins" content="104102651453316562112116375" />
+  <meta property="qc:admins" content="11635613706305617" />
+  <meta property="qc:admins" content="1163561616621163056375" />
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4" />
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI" />
+  <meta http-equiv="mobile-agent" content="format=html5; url=https://www.jianshu.com/p/e4b24a734ccc">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="简书">
+
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/13027385">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="如何用Python做词云？" property="twitter:title">
+  <meta content="临渊羡鱼，不如退而结网。我们步步为营，从头开始帮助你用Python做出第一张词云图来。欢迎尝试哦！ 在大数据时代，你经常可以在媒体或者网站上看到一些非常漂亮的信息图。 例如这..." property="twitter:description">
+  <meta content="https://www.jianshu.com/p/e4b24a734ccc" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="如何用Python做词云？">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jianshu.com/p/e4b24a734ccc">
+  <meta property="og:description" content="临渊羡鱼，不如退而结网。我们步步为营，从头开始帮助你用Python做出第一张词云图来。欢迎尝试哦！ 在大数据时代，你经常可以在媒体或者网站上看到一些非常漂亮的信息图。 例如这个样子。 看过之后你...">
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/13027385" />
+  <meta property="al:ios:app_store_id" content="888237539" />
+  <meta property="al:ios:app_name" content="简书" />
+
+  <meta property="al:android:url" content="jianshu://notes/13027385" />
+  <meta property="al:android:package" content="com.jianshu.haruki" />
+  <meta property="al:android:app_name" content="简书" />
+  <!-- End -->
+
+
+    <title>如何用Python做词云？ - 简书</title>
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="zFP7qYVwznebng/QVapCKW8duIDNfjzsphj4++K2lMZhhydqIhi/A93VQe7sK4FC5tbylWcOhxGYr6tS0NMIiQ==" />
+
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web-274d6a76417c1f7a7da5.css" />
+  
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-aa75deb505b1b600256a.css" />
+
+  <link href="//cdn2.jianshu.io/assets/favicons/favicon-e743bfb1821442341c3ab15bdbe804f7ad97676bd07a770ccc9483473aa76f06.ico" rel="shortcut icon" type="image/x-icon">
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/57-a6f1f1ee62ace44f6dc2f6a08575abd3c3b163288881c78dd8d75247682a4b27.png" sizes="57x57" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/72-fb9834bcfce738fd7b9c5e31363e79443e09a81a8e931170b58bc815387c1562.png" sizes="72x72" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/76-49d88e539ff2489475d603994988d871219141ecaa0b1a7a9a1914f4fe3182d6.png" sizes="76x76" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/114-24252fe693524ed3a9d0905e49bff3cbd0228f25a320aa09053c2ebb4955de97.png" sizes="114x114" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/120-1bb7371f5e87f93ce780a5f1a05ff1b176828ee0d1d130e768575918a2e05834.png" sizes="120x120" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/152-bf209460fc1c17bfd3e2b84c8e758bc11ca3e570fd411c3bbd84149b97453b99.png" sizes="152x152" />
+
+  <!-- Start of 访问统计 -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+  <!-- End of 访问统计 -->
+</head>
+
+  <!-- 只给10%的用户添加代码 -->
+  <!-- ###第四范式-智能推荐：代码直接复制 无需修改参数### -->
+  <!-- ###功能：上报内容并反馈用户行为### -->
+  <!--
+  -->
+  <body lang="zh-CN" class="reader-black-font">
+    <!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="width-limit">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="/"><img src="//cdn2.jianshu.io/assets/web/nav-logo-4c7bbafe27adc892f3046e6978459bac.png" alt="Nav logo" /></a>
+
+    <!-- 右上角 -->
+      <!-- 未登录显示登录/注册/写文章 -->
+      <a class="btn write-btn" target="_blank" href="/writer#/">
+        <i class="iconfont ic-write"></i>写文章
+</a>      <a class="btn sign-up" id="sign_up" href="/sign_up">注册</a>
+      <a class="btn log-in" id="sign_in" href="/sign_in">登录</a>
+
+    <!-- 如果用户登录，显示下拉菜单 -->
+
+    <div id="view-mode-ctrl">
+    </div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+            <li class="tab ">
+              <a href="/">
+                <span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i>
+</a>            </li>
+            <li class="tab ">
+              <a id="web-nav-app-download-btn" class="app-download-btn" href="/apps?utm_medium=desktop&amp;utm_source=navbar-apps"><span class="menu-text">下载App</span><i class="iconfont ic-navigation-download menu-icon"></i></a>
+            </li>
+          <li class="search">
+            <form target="_blank" action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+              <input type="text" name="q" id="q" value="" autocomplete="off" placeholder="搜索" class="search-input" />
+              <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+</form>          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+<div class="note">
+  <div id="note-fixed-ad-container">
+    <div id="fixed-ad-container">
+      <div id="write-notes-ad"></div>
+      <div id="youdao-fixed-ad"></div>
+      <div id="yuxi-fixed-ad"></div>
+      <div id="_so_pdsBy_0"></div>
+    </div>
+  </div>
+  <div class="post">
+    <div class="article">
+        <h1 class="title">如何用Python做词云？</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="/u/7618ab4a30e4">
+            <img src="//upload.jianshu.io/users/upload_avatars/64542/53f3ed10904a.JPG?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96" alt="96" />
+</a>          <div class="info">
+            <span class="name"><a href="/u/7618ab4a30e4">王树义</a></span>
+              <img class="badge-icon" data-toggle="tooltip" title="互联网优秀作者" src="//upload.jianshu.io/user_badge/db3aaf4f-effd-43dc-9137-d6bf7f70211e" alt="Db3aaf4f effd 43dc 9137 d6bf7f70211e" />
+            <!-- 关注用户按钮 -->
+            <div props-data-classes="user-follow-button-header" data-author-follow-button></div>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 简书钻 -->
+                <span class="jsd-meta">
+                  <i class="iconfont ic-paid1"></i> 1.5
+                </span>
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="最后编辑于 2018.07.20 13:06">2017.06.01 22:29*</span>
+              <span class="wordage">字数 2141</span>
+            </div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+
+
+        <!-- 文章内容 -->
+        <div data-note-content class="show-content">
+          <div class="show-content-free">
+            <p>临渊羡鱼，不如退而结网。我们步步为营，从头开始帮助你用Python做出第一张词云图来。欢迎尝试哦！</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 551px;">
+<div class="image-container-fill" style="padding-bottom: 78.77%;"></div>
+<div class="image-view" data-width="914" data-height="720"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-8c92c9c3b5c09561" data-original-width="914" data-original-height="720" data-original-format="" data-original-filesize="409241"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>在大数据时代，你经常可以在媒体或者网站上看到一些非常漂亮的信息图。</p>
+<p>例如这个样子。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 502px; max-height: 502px;">
+<div class="image-container-fill" style="padding-bottom: 100.0%;"></div>
+<div class="image-view" data-width="502" data-height="502"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-9efebf547dc16971.jpg" data-original-width="502" data-original-height="502" data-original-format="image/png" data-original-filesize="234544"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>看过之后你有什么感觉？想不想自己做一张出来？</p>
+<p>如果你的答案是肯定的，我们就不要拖延了，现在就开始，做个词云分析图。当然，做为基础的词云图，肯定比不上刚才那两张信息图酷炫。不过不要紧，好的开始是成功的一半。食髓知味，后面你就可以自己升级技能，进入你开挂的成功之路。</p>
+<p>网上教你做信息图的教程很多。许多都是利用了专用工具。这些工具好是好，便捷而强大。只是它们功能都太过专一，适用范围有限。今天我们要尝试的，是用通用的编程语言 Python 来做词云。</p>
+<p>Python 是一种时下很流行的编程语言。你不仅可以用它做数据分析和可视化，还能用来做网站、爬取数据、做数学题、写脚本替你偷懒……</p>
+<p>知道豆瓣吗？它一开始就是用 Python 写的。</p>
+<p>在目前的编程语言热度排序里，Python 屈居第四（当然，很多人不同意，所以编程语言的排行榜有许多，你懂的）。但看问题要用发展眼光。随着数据科学的发展，Python 有爆发的趋势。早点儿站上风口，很有益处。</p>
+<p>如果你之前没有编程基础，没关系。从零开始，意味着我会教你如何安装Python运行环境，一步步完成词云图。希望你不要限于浏览，而是亲自动手尝试一番。到完成的那一步，你不仅可以做出第一张词云图，而且这还将是你的第一个有用的编程作品。</p>
+<p>心动了？那咱们就开始吧。</p>
+<h1>安装</h1>
+<p>首先，我们需要安装 Python 运行环境。我专门为你录制了一个视频教程，请点击<a href="https://www.jianshu.com/p/772740d57576" target="_blank">这个链接</a>查看，并仿照安装。</p>
+<p>进行下一步之前，请确保你已经安装好了 Anaconda ，并且已经进入了终端。</p>
+<p>请键入以下命令：</p>
+<pre><code class="bash">pip install wordcloud
+</code></pre>
+<p>如果你用的操作系统是苹果的 macOS ，系统就会提示你先安装 XCode 命令行工具，你按照默认设置一步步进行就可以了。</p>
+<p>如果你用的是 Windows，那么为了使用这个词云包，就稍微麻烦一些。好在我为你录制了在 Windows 下用 Python 制作词云的完整视频教程，请点击<a href="http://v.qq.com/x/page/z0550k0sb26.html" target="_blank" rel="nofollow">这个链接</a>查看。</p>
+<h1>数据</h1>
+<p>安装了 Python 的运行环境，我们还需要数据。</p>
+<p>词云分析的对象，是文本。</p>
+<p>理论上讲，文本可以是各种语言的。英文、中文、法文、阿拉伯文……</p>
+<p>为了简便，我们这里以英文文本为例。你可以随意到网上找一篇英文文章作为分析对象。我特别喜欢英剧"Yes, minister"，所以到维基百科上找到了这部剧的介绍词条。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 425px;">
+<div class="image-container-fill" style="padding-bottom: 60.809999999999995%;"></div>
+<div class="image-view" data-width="1240" data-height="754"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-77fba50609383f03.jpg" data-original-width="1240" data-original-height="754" data-original-format="image/jpeg" data-original-filesize="130176"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>我把其中的正文文字部分拷贝了下来，存储为一个文本文件，叫做 <code>yes-minister.txt</code> 。</p>
+<p>请你点击<a href="https://github.com/wshuyi/demo-python-wordcloud/archive/master.zip" target="_blank" rel="nofollow">这个网址链接</a>，下载压缩包。并且把压缩包解压，将其中的 <code>yes-minister.txt</code> 文件挪动到工作目录 demo 里。</p>
+<p>好了，文本数据已经准备好了。开始进入编程的魔幻世界吧！</p>
+<h1>代码</h1>
+<p>你会注意到，刚才压缩包里面其实还有一个文件，就是咱们词云绘制的完整代码 ipynb 文件。</p>
+<p>不过我建议你还是自己跟着教程做一遍。这样印象更深刻，不是吗？</p>
+<p>在命令行下，执行：</p>
+<pre><code class="bash">jupyter notebook
+</code></pre>
+<p>浏览器会自动开启，并且显示如下界面。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 425px;">
+<div class="image-container-fill" style="padding-bottom: 60.809999999999995%;"></div>
+<div class="image-view" data-width="1240" data-height="754"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-80aa07747fc8d503.jpg" data-original-width="1240" data-original-height="754" data-original-format="image/jpeg" data-original-filesize="33457"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>这就是咱们刚才的劳动成果——安装好的运行环境了。我们还没有编写程序，目录下只有一个刚才生成的文本文件。</p>
+<p>打开这个文件，浏览一下内容。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 425px;">
+<div class="image-container-fill" style="padding-bottom: 60.809999999999995%;"></div>
+<div class="image-view" data-width="1240" data-height="754"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-20044fdb38a66a4c.jpg" data-original-width="1240" data-original-height="754" data-original-format="image/jpeg" data-original-filesize="180322"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>回到 Jupyter 笔记本的主页面。我们点击 New 按钮，新建一个笔记本(Notebook)。在 Notebooks 里面，请选择 Python 3 选项。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 425px;">
+<div class="image-container-fill" style="padding-bottom: 60.809999999999995%;"></div>
+<div class="image-view" data-width="1240" data-height="754"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-83280c7fee261afe.jpg" data-original-width="1240" data-original-height="754" data-original-format="image/jpeg" data-original-filesize="42328"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>系统会提示我们输入 Notebook 的名称。程序代码文件的名称，你可以随便起。但是我建议你起一个有意义的名字，将来好方便查找。由于我们要尝试词云，就叫它 wordcloud 好了。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 425px;">
+<div class="image-container-fill" style="padding-bottom: 60.809999999999995%;"></div>
+<div class="image-view" data-width="1240" data-height="754"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-8832d9bdc77cf104.jpg" data-original-width="1240" data-original-height="754" data-original-format="image/jpeg" data-original-filesize="40307"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>然后就出现了一个空白的笔记本，供我们使用了。我们在网页里唯一的代码文本框里，输入以下3条语句。请务必逐字根据示例代码输入，空格数量都不可以有差别。尤其注意第三行，用4个空格，或者1个 Tab 开始。输入后，按 Shift+Enter 键，就可以执行了。</p>
+<pre><code>filename = "yes-minister.txt"
+with open(filename) as f:
+ mytext = f.read()
+</code></pre>
+<p>没有任何结果啊。</p>
+<p>对，因为我们这里没有任何输出动作，程序只是打开了你的 <code>yes-minister.txt</code> 文本文件，把里面的内容都读了出来，存储到了一个叫做<code>mytext</code> 的变量里面。</p>
+<p>然后我们尝试显示 <code>mytext</code> 的内容。输入以下语句之后，还是得按  Shift+Enter 键，系统才会实际执行该语句。</p>
+<pre><code>mytext
+</code></pre>
+<p>之后的步骤里，也千万不要忘了这一确认执行动作。</p>
+<p>显示的结果如下图所示。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 623px;">
+<div class="image-container-fill" style="padding-bottom: 50.239999999999995%;"></div>
+<div class="image-view" data-width="1240" data-height="623"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-e5c36c0fd6a3de9a.jpg" data-original-width="1240" data-original-height="623" data-original-format="image/jpeg" data-original-filesize="179592"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>嗯，看来 <code>mytext</code> 变量里存储的文本就是我们从网上摘来的文字。到目前为止，一切正常。</p>
+<p>然后我们呼唤(import)词云包，利用 <code>mytext</code> 中存储的文本内容来制造词云。</p>
+<pre><code>from wordcloud import WordCloud
+wordcloud = WordCloud().generate(mytext)
+</code></pre>
+<p>这时程序可能会报警。别担心。警告(warning)不影响程序的正常运行。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 253px;">
+<div class="image-container-fill" style="padding-bottom: 20.4%;"></div>
+<div class="image-view" data-width="1240" data-height="253"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-bc2ff61239fab66f.jpg" data-original-width="1240" data-original-height="253" data-original-format="image/jpeg" data-original-filesize="45992"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>此时词云分析已经完成了。你没看错，制作词云的核心步骤只需要这2行语句，而且第一条还只是从扩展包里找外援。但是程序并不会给我们显示任何东西。</p>
+<p>说好了的词云呢？折腾了这么半天，却啥也没有，你蒙人吗？！</p>
+<p>别激动。输入下面4行语句后，就是见证奇迹发生的时刻了。</p>
+<pre><code>%pylab inline
+import matplotlib.pyplot as plt
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+</code></pre>
+<p>运行结果如图所示：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 637px;">
+<div class="image-container-fill" style="padding-bottom: 51.370000000000005%;"></div>
+<div class="image-view" data-width="1240" data-height="637"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-61c605b4983bd14c.jpg" data-original-width="1240" data-original-height="637" data-original-format="image/jpeg" data-original-filesize="86536"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>不用那么兴奋嘛。</p>
+<p>你可以在词云图片上单机鼠标右键，用“图片另存为”功能导出。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 382px; max-height: 200px;">
+<div class="image-container-fill" style="padding-bottom: 52.35999999999999%;"></div>
+<div class="image-view" data-width="382" data-height="200"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-cd10888157e5a1da.png" data-original-width="382" data-original-height="200" data-original-format="image/png" data-original-filesize="81090"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>通过这张词云图，我们可以看到不同单词和词组出现的频率高低差别。高频词的字体明显更大，而且颜色也很醒目。值得说明的是，最显眼的单词 Hacker 并不是指黑客，而是指这部剧的主角之一——哈克首相。</p>
+<p>希望你在尝试过程中一切顺利。对自己生成的词云图满意吗？如果你不满意，也不要紧，可以挖掘 wordcloud 软件包的其他高级功能。尝试一下，看自己能不能做出这样的词云图来？</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 700px;">
+<div class="image-container-fill" style="padding-bottom: 100.0%;"></div>
+<div class="image-view" data-width="900" data-height="900"><img data-original-src="//upload-images.jianshu.io/upload_images/64542-fbcbdf5bec896c5d.jpg" data-original-width="900" data-original-height="900" data-original-format="image/png" data-original-filesize="179110"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<h1>讨论</h1>
+<p>学完了本方法后，你做出了一张什么样的词云图？除了本文介绍的方法以外，你还知道哪些便捷地制作词云或其他信息图的方式？欢迎留言，分享给大家。我们共同交流讨论。</p>
+<p>喜欢请点赞。还可以微信关注和置顶我的公众号<a href="http://oejqwrqkh.bkt.clouddn.com/2016-10-11-22-26-16.jpg" target="_blank" rel="nofollow">“玉树芝兰”(nkwangshuyi)</a>。</p>
+<p>如果你对数据科学感兴趣，不妨阅读我的系列教程索引贴《<a href="https://www.jianshu.com/p/85f4624485b9" target="_blank">如何高效入门数据科学？</a>》，里面还有更多的有趣问题及解法。</p>
+
+          </div>
+        </div>
+    </div>
+
+    <!-- 如果是付费文章，未购买，则显示购买按钮 -->
+
+    <!-- 连载目录项 -->
+      <div class="book-menu">
+        <div class="menu-item">
+            <a href="/p/47c1a5a459b2">
+              <i class="iconfont ic-previous-s"></i>上一篇
+            </a>
+        </div>
+        <div class="menu-item">
+          <a id="openBookChapterBtn" href="javascript:;">目录</a>
+        </div>
+        <div class="menu-item">
+            <a href="/p/8b90c2f12856">
+              下一篇<i class="iconfont ic-next-s"></i>
+            </a>
+        </div>
+      </div>
+      <div data-vcomp="book-chapters-modal" props-data-book-id="1150" props-data-slug="e4b24a734ccc" props-data-order="desc"></div>
+
+    <!-- 如果是付费文章 -->
+      <!-- 如果是付费连载，已购买，且作者允许赞赏，则显示付费信息和赞赏 -->
+        <div data-vcomp="free-reward-panel"></div>
+
+      <div class="show-foot">
+        <a class="notebook" href="/nb/130182">
+          <i class="iconfont ic-search-notebook"></i>
+          <span>玉树芝兰</span>
+</a>        <div class="copyright" data-toggle="tooltip" data-html="true" data-original-title="转载请联系作者获得授权，并标注“简书作者”。">
+          © 著作权归作者所有
+        </div>
+        <div class="modal-wrap" data-report-note>
+          <a id="report-modal">举报文章</a>
+        </div>
+      </div>
+
+      <!-- 文章底部连载信息 -->
+        <div id="note-book-info">
+          <a href="/nb/130182" class="banner">
+            <img src="//upload.jianshu.io/book/image/53ae9b43-387d-4007-8a10-7a07fc93afed.jpg" alt="">
+          </a>
+          <div class="info">
+            <a href="/nb/130182" class="title">
+              玉树芝兰
+            </a>
+            <div class="meta">
+              <span>48.0万字 </span>
+              ·
+              <span>76.6万阅读</span>
+              ·
+              <span>1366人关注</span>
+            </div>
+            <div class="summary">
+                
+            </div>
+            <div class="follow-button" props-data-notebook-id="130182" props-data-following="false"></div>
+          </div>
+        </div>
+
+    <div class="meta-bottom">
+      <div class="btn like-group"></div>
+      <div class="share-group">
+        <a class="share-circle" data-action="weixin-share" data-toggle="tooltip" data-original-title="分享到微信">
+          <i class="iconfont ic-wechat"></i>
+        </a>
+        <a class="share-circle" data-action="weibo-share" data-toggle="tooltip" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;&#39;, &#39;推荐 @nkwshuyi 的文章《如何用Python做词云？》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/e4b24a734ccc?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-original-title="分享到微博">
+          <i class="iconfont ic-weibo"></i>
+        </a>
+        <a class="share-circle" data-toggle="tooltip"  id="longshare" target="_blank">
+            <div class="qrcode" id="qrcode">
+             <img src="//cdn2.jianshu.io/assets/web/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png" alt="Download index side qrcode" />
+             <p>下载app生成长微博图片</p>
+             </div>
+          <i class="iconfont ic-picture"></i>
+        </a>
+        <a class="share-circle more-share" tabindex="0" data-toggle="popover" data-placement="top" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content='
+          <ul class="share-list">
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/e4b24a734ccc?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 王树义 的文章《如何用Python做词云？》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-zone"></i><span>分享到QQ空间</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/e4b24a734ccc?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 王树义 的文章《如何用Python做词云？》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-twitter"></i><span>分享到Twitter</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/e4b24a734ccc?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-facebook"></i><span>分享到Facebook</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/e4b24a734ccc?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-google"></i><span>分享到Google+</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/e4b24a734ccc?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;如何用Python做词云？&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><i class="social-icon-sprite social-icon-douban"></i><span>分享到豆瓣</span></a></li>
+          </ul>
+        '>更多分享</a>
+      </div>
+    </div>
+
+      <a id="web-note-ad-1" target="_blank" href="/apps/redirect?utm_source=note-bottom-click"><img src="//cdn2.jianshu.io/assets/web/web-note-ad-1-c2e1746859dbf03abe49248893c9bea4.png" alt="Web note ad 1" /></a>
+
+    <!--
+    <div id="note-comment-above-ad-container">
+      <span id="youdao-comment-ad" class="ad-badge">广告</span>
+    </div>
+    -->
+    <div id="vue_comment"></div>
+  </div>
+
+  <div class="vue-side-tool" props-data-props-show-qr-code="0"></div>
+</div>
+<div class="note-bottom">
+  <div class="js-included-collections"></div>
+  <div data-vcomp="recommended-notes" data-lazy="1.5" data-note-id="13027385"></div>
+  <!-- 相关文章 -->
+    <!-- 未登录用户 -->
+    <div class="seo-recommended-notes">
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/a166e63544d8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Python--Flask Django等常用库总结</a>
+            <p class="description"># Python 资源大全中文版 我想很多程序员应该记得 GitHub 上有一个 Awesome - XXX 系列的资源整理。[awesome-python](https://link.jianshu.com?t=https%3A%2F%2Fgithub.com%2Fvin...</p>
+            <a class="author" target="_blank" href="/u/f8ed0b1f76ef?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//cdn2.jianshu.io/assets/default_avatar/5-33d2da32c552b8be9a0548c7a4576607.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">aimaile</span>
+</a>          </div>
+
+          <div class="note have-img">
+            <a class="cover" target="_blank" href="/p/9c6ae64a1bd7?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <img src="//upload-images.jianshu.io/upload_images/1293367-bf614dc56c72a793.png?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240" alt="240" />
+</a>            <a class="title" target="_blank" href="/p/9c6ae64a1bd7?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Python 资源大全中文版</a>
+            <p class="description">GitHub 上有一个 Awesome - XXX 系列的资源整理,资源非常丰富，涉及面非常广。awesome-python 是 vinta 发起维护的 Python 资源列表，内容包括：Web框架、网络爬虫、网络内容提取、模板引擎、数据库、数据可视化、图片处理、文本处理、...</p>
+            <a class="author" target="_blank" href="/u/30c5a2b50c1d?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/1293367/91ccecc113ea.jpeg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">若与</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/59e5662b8fc3?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">python库收集贴</a>
+            <p class="description">环境管理管理Python版本和环境的工具。p–非常简单的交互式python版本管理工具。pyenv–简单的Python版本管理工具。Vex–可以在虚拟环境中执行命令。virtualenv–创建独立Python环境的工具。virtualenvwrapper-virtualen...</p>
+            <a class="author" target="_blank" href="/u/257aacaef4f5?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//cdn2.jianshu.io/assets/default_avatar/13-394c31a9cb492fcb39c27422ca7d2815.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">MrHamster</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/a365e1e766cd?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">一件怪事</a>
+            <p class="description">那天，我回学校上课。路上学生很多，我似乎留意到有一个奇怪的人，但我没仔细看那人哪里奇怪。当时我已经迟到了。有好一段时间我没回学校上课了，来的时候有点找不着方向。 我找了几层，终于在外面看到其中一间教室里同时有好几个熟悉的人，应该就是这间了。我刚走进去，还没找到座位，下课铃就...</p>
+            <a class="author" target="_blank" href="/u/66e5a0a26993?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/1908936/b24a642a-8b5d-4b77-8b75-930cf40e545c.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">Toot_2019</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/57981390fcba?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">每日一题: MVP开发模式</a>
+            <p class="description">每日一题: MVP开发模式 面试率: ★★★★★ 面试提醒 在Android中MVP已经不算是什么新鲜东西了,记得Android以前比较流行的开发模式是MVC,而MVP是MVC的一个扩展,当随着项目越来越庞大,复杂,参与开发人员越来越多,MVP模式的优势就充分显示出来了. ...</p>
+            <a class="author" target="_blank" href="/u/c2c41ad9d9ce?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/1152047/6519cb056c4b.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">林锐波</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/f5bfa180f31a?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">美</a>
+            <p class="description">肢体语言灵魂语，容貌呈现灵魂美。灵魂化身处处显，生命就是在探索。生活就是在创造，创造各种灵魂美。美的灵魂美的家，美的世界人人美。禅意生活自在身，洒脱自在在人间。</p>
+            <a class="author" target="_blank" href="/u/0335db9b3f37?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/8166268/c6dc6b44-f55f-421e-9586-917481674d08.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">禅意自在</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/1dcd9aa4cec2?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">清除所有默认样式</a>
+            <p class="description">本来我是使用  * ，后来被告知这个有bug，所以特意送上完整版的清除样式的一段代码，希望对你们有帮助！</p>
+            <a class="author" target="_blank" href="/u/9a5ed309f211?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/4951956/edac351c-07bb-46d8-86c7-851597db5923.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">壬万er</span>
+</a>          </div>
+    </div>
+</div>
+
+    <script type="application/json" data-name="page-data">{"user_signed_in":false,"locale":"zh-CN","os":"windows","read_mode":"day","read_font":"font2","note_show":{"is_author":false,"is_following_author":false,"is_liked_note":false,"follow_state":0,"uuid":"8cd00d7e-9d5c-49ee-88ae-4ef92f3e7074"},"note":{"id":13027385,"slug":"e4b24a734ccc","user_id":64542,"notebook_id":130182,"commentable":true,"likes_count":572,"views_count":57985,"public_wordage":2141,"comments_count":64,"featured_comments_count":2,"total_rewards_count":6,"is_author":false,"paid_type":"fbook_free","paid":false,"paid_content_accessible":false,"author":{"nickname":"王树义","total_wordage":480466,"followers_count":62213,"total_likes_count":9941}}}</script>
+    
+    <script src="//cdn2.jianshu.io/assets/babel-polyfill-6cd2d6b53fe3184b71cc.js" crossorigin="anonymous"></script>
+    <script src="//cdn2.jianshu.io/assets/web-base-fce9dfdeffea43617fa3.js" crossorigin="anonymous"></script>
+<script src="//cdn2.jianshu.io/assets/web-816b8e1cf8c21bb1895d.js" crossorigin="anonymous"></script>
+    
+    <script src="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-b0c6dee10b4c6c65f9fa.js" crossorigin="anonymous"></script>
+    <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 7]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<!--[if !IE]><!--> <html> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width"/>
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="mobile-agent" content="format=html5;url=https://www.jianshu.com/p/ba02079ecd2f">
+  <!-- End of Baidu Transcode -->
+
+    <meta name="description"  content="如何用Python爬数据？（一）网页抓取 你期待已久的Python网络数据爬虫教程来了。本文为你演示如何从网页里找到感兴趣的链接和说明文字，抓取并存储到Excel。 需求 我在公众号后台，经常可以收到读者的留言。 很多留言，是读者的疑问。只要有时间，我都会抽空尝试解答。 但是有的留言，乍看起来就不明所以了。 例如下面这个： 一分钟后，他可能觉得不妥（大概因为想起来，我用简体字写文章），于是又...">
+
+  <meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8" />
+  <meta property="wb:webmaster" content="294ec9de89e7fadb" />
+  <meta property="qc:admins" content="104102651453316562112116375" />
+  <meta property="qc:admins" content="11635613706305617" />
+  <meta property="qc:admins" content="1163561616621163056375" />
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4" />
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI" />
+  <meta http-equiv="mobile-agent" content="format=html5; url=https://www.jianshu.com/p/ba02079ecd2f">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="简书">
+
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/24704801">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="如何用Python爬数据？（一）网页抓取" property="twitter:title">
+  <meta content="如何用Python爬数据？（一）网页抓取 你期待已久的Python网络数据爬虫教程来了。本文为你演示如何从网页里找到感兴趣的链接和说明文字，抓取并存储到Excel。 需求 我..." property="twitter:description">
+  <meta content="https://www.jianshu.com/p/ba02079ecd2f" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="如何用Python爬数据？（一）网页抓取">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jianshu.com/p/ba02079ecd2f">
+  <meta property="og:description" content="如何用Python爬数据？（一）网页抓取 你期待已久的Python网络数据爬虫教程来了。本文为你演示如何从网页里找到感兴趣的链接和说明文字，抓取并存储到Excel。 需求 我在公众号后台，经常可...">
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/24704801" />
+  <meta property="al:ios:app_store_id" content="888237539" />
+  <meta property="al:ios:app_name" content="简书" />
+
+  <meta property="al:android:url" content="jianshu://notes/24704801" />
+  <meta property="al:android:package" content="com.jianshu.haruki" />
+  <meta property="al:android:app_name" content="简书" />
+  <!-- End -->
+
+
+    <title>如何用Python爬数据？（一）网页抓取 - 简书</title>
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="PzH5uAfHJIKRC/l+mGLyRFzb7Lyna7cNU6aeuKLRIFOS5SV7oK9V9tdAt0Ah4zEv1RCmqQ0bDPBtEc0RkLS8HA==" />
+
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web-274d6a76417c1f7a7da5.css" />
+  
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-aa75deb505b1b600256a.css" />
+
+  <link href="//cdn2.jianshu.io/assets/favicons/favicon-e743bfb1821442341c3ab15bdbe804f7ad97676bd07a770ccc9483473aa76f06.ico" rel="shortcut icon" type="image/x-icon">
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/57-a6f1f1ee62ace44f6dc2f6a08575abd3c3b163288881c78dd8d75247682a4b27.png" sizes="57x57" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/72-fb9834bcfce738fd7b9c5e31363e79443e09a81a8e931170b58bc815387c1562.png" sizes="72x72" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/76-49d88e539ff2489475d603994988d871219141ecaa0b1a7a9a1914f4fe3182d6.png" sizes="76x76" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/114-24252fe693524ed3a9d0905e49bff3cbd0228f25a320aa09053c2ebb4955de97.png" sizes="114x114" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/120-1bb7371f5e87f93ce780a5f1a05ff1b176828ee0d1d130e768575918a2e05834.png" sizes="120x120" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/152-bf209460fc1c17bfd3e2b84c8e758bc11ca3e570fd411c3bbd84149b97453b99.png" sizes="152x152" />
+
+  <!-- Start of 访问统计 -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+  <!-- End of 访问统计 -->
+</head>
+
+  <!-- 只给10%的用户添加代码 -->
+  <!-- ###第四范式-智能推荐：代码直接复制 无需修改参数### -->
+  <!-- ###功能：上报内容并反馈用户行为### -->
+  <!--
+    <script charset="utf-8" id="ParadigmSDKv3" src="https://nbrecsys.4paradigm.com/sdk/js/ParadigmSDK_v3.js">
+    </script>
+    <script>
+      ParadigmSDKv3.init("5cc57c5e8add401aa5533ff26dde2532");
+      ParadigmSDKv3.trackDetailPageShow(524);
+    </script>
+  -->
+  <body lang="zh-CN" class="reader-black-font">
+    <!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="width-limit">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="/"><img src="//cdn2.jianshu.io/assets/web/nav-logo-4c7bbafe27adc892f3046e6978459bac.png" alt="Nav logo" /></a>
+
+    <!-- 右上角 -->
+      <!-- 未登录显示登录/注册/写文章 -->
+      <a class="btn write-btn" target="_blank" href="/writer#/">
+        <i class="iconfont ic-write"></i>写文章
+</a>      <a class="btn sign-up" id="sign_up" href="/sign_up">注册</a>
+      <a class="btn log-in" id="sign_in" href="/sign_in">登录</a>
+
+    <!-- 如果用户登录，显示下拉菜单 -->
+
+    <div id="view-mode-ctrl">
+    </div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+            <li class="tab ">
+              <a href="/">
+                <span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i>
+</a>            </li>
+            <li class="tab ">
+              <a id="web-nav-app-download-btn" class="app-download-btn" href="/apps?utm_medium=desktop&amp;utm_source=navbar-apps"><span class="menu-text">下载App</span><i class="iconfont ic-navigation-download menu-icon"></i></a>
+            </li>
+          <li class="search">
+            <form target="_blank" action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+              <input type="text" name="q" id="q" value="" autocomplete="off" placeholder="搜索" class="search-input" />
+              <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+</form>          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+<div class="note">
+  <div id="note-fixed-ad-container">
+    <div id="fixed-ad-container">
+      <div id="write-notes-ad"></div>
+      <div id="youdao-fixed-ad"></div>
+      <div id="yuxi-fixed-ad"></div>
+      <div id="_so_pdsBy_0"></div>
+    </div>
+  </div>
+  <div class="post">
+    <div class="article">
+        <h1 class="title">如何用Python爬数据？（一）网页抓取</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="/u/7618ab4a30e4">
+            <img src="//upload.jianshu.io/users/upload_avatars/64542/53f3ed10904a.JPG?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96" alt="96" />
+</a>          <div class="info">
+            <span class="name"><a href="/u/7618ab4a30e4">王树义</a></span>
+              <img class="badge-icon" data-toggle="tooltip" title="互联网优秀作者" src="//upload.jianshu.io/user_badge/db3aaf4f-effd-43dc-9137-d6bf7f70211e" alt="Db3aaf4f effd 43dc 9137 d6bf7f70211e" />
+            <!-- 关注用户按钮 -->
+            <div props-data-classes="user-follow-button-header" data-author-follow-button></div>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 简书钻 -->
+                <span class="jsd-meta">
+                  <i class="iconfont ic-paid1"></i> 2.1
+                </span>
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="最后编辑于 2018.12.01 07:51">2018.03.03 21:56*</span>
+              <span class="wordage">字数 6357</span>
+            </div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+
+
+        <!-- 文章内容 -->
+        <div data-note-content class="show-content">
+          <div class="show-content-free">
+            <h1>如何用Python爬数据？（一）网页抓取</h1>
+<p>你期待已久的Python网络数据爬虫教程来了。本文为你演示如何从网页里找到感兴趣的链接和说明文字，抓取并存储到Excel。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-792876.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-792876.png"><div class="image-caption"></div>
+</div>
+<h1>需求</h1>
+<p>我在公众号后台，经常可以收到读者的留言。</p>
+<p>很多留言，是读者的疑问。只要有时间，我都会抽空尝试解答。</p>
+<p>但是有的留言，乍看起来就不明所以了。</p>
+<p>例如下面这个：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-19-05-09-970402.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-19-05-09-970402.png"><div class="image-caption"></div>
+</div>
+<p>一分钟后，他可能觉得不妥（大概因为想起来，我用简体字写文章），于是又用简体发了一遍。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-865706.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-865706.png"><div class="image-caption"></div>
+</div>
+<p>我恍然大悟。</p>
+<p>这位读者以为我的公众号设置了关键词推送对应文章功能。所以看了我的其他数据科学教程后，想看“爬虫”专题。</p>
+<p>不好意思，当时我还没有写爬虫文章。</p>
+<p>而且，我的公众号暂时也没有设置这种关键词推送。</p>
+<p>主要是因为我懒。</p>
+<p>这样的消息接收得多了，我也能体察到读者的需求。不止一个读者表达出对爬虫教程的兴趣。</p>
+<p>之前提过，目前主流而合法的网络数据收集方法，主要分为3类：</p>
+<ul>
+<li>开放数据集下载；</li>
+<li>API读取；</li>
+<li>爬虫。</li>
+</ul>
+<p>前两种方法，我都已经做过一些介绍，这次说说爬虫。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-04-07-11-31-258650.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-04-07-11-31-258650.png"><div class="image-caption"></div>
+</div>
+<h1>概念</h1>
+<p>许多读者对爬虫的定义，有些混淆。咱们有必要辨析一下。</p>
+<p>维基百科是这么说的：</p>
+<blockquote>
+<p>网络爬虫（英语：web crawler），也叫网络蜘蛛（spider），是一种用来自动浏览<a href="https://zh.wikipedia.org/wiki/%E4%B8%87%E7%BB%B4%E7%BD%91" target="_blank" rel="nofollow">万维网</a>的<a href="https://zh.wikipedia.org/w/index.php?title=%E7%BD%91%E7%BB%9C%E6%9C%BA%E5%99%A8%E4%BA%BA&amp;action=edit&amp;redlink=1" target="_blank" rel="nofollow">网络机器人</a>。其目的一般为编纂<a href="https://zh.wikipedia.org/w/index.php?title=%E7%BD%91%E7%BB%9C%E7%B4%A2%E5%BC%95&amp;action=edit&amp;redlink=1" target="_blank" rel="nofollow">网络索引</a>。<br>
+这问题就来了，你又不打算做搜索引擎，为什么对网络爬虫那么热心呢？</p>
+</blockquote>
+<p>其实，许多人口中所说的爬虫（web crawler），跟另外一种功能“网页抓取”（web scraping）搞混了。</p>
+<p>维基百科上，对于后者这样解释：</p>
+<blockquote>
+<p>Web scraping, web harvesting, or web data extraction is data scraping used for extracting data from websites. Web scraping software may access the World Wide Web directly using the Hypertext Transfer Protocol, or through a web browser.<br>
+看到没有，即便你用浏览器手动拷贝数据下来，也叫做网页抓取（web scraping）。是不是立刻觉得自己强大了很多？</p>
+</blockquote>
+<p>但是，这定义还没完：</p>
+<blockquote>
+<p>While web scraping can be done manually by a software user, the term typically refers to automate processes implemented using a bot or web crawler.<br>
+也就是说，用爬虫（或者机器人）<strong>自动</strong>替你完成网页抓取工作，才是你真正想要的。</p>
+</blockquote>
+<p>数据抓下来干什么呢？</p>
+<p>一般是先存储起来，放到数据库或者电子表格中，以备检索或者进一步分析使用。</p>
+<p>所以，你真正想要的功能是这样的：</p>
+<p>找到链接，获得Web页面，抓取指定信息，存储。</p>
+<p>这个过程有可能会往复循环，甚至是滚雪球。</p>
+<p>你希望用自动化的方式来完成它。</p>
+<p>了解了这一点，你就不要老盯着爬虫不放了。爬虫研制出来，其实是为了给搜索引擎编制索引数据库使用的。你为了抓取点儿数据拿来使用，已经是大炮轰蚊子了。</p>
+<p>要真正掌握爬虫，你需要具备不少基础知识。例如HTML, CSS, Javascript, 数据结构……</p>
+<p>这也是为什么我一直犹豫着没有写爬虫教程的原因。</p>
+<p>不过这两天，看到王烁主编的一段话，很有启发：</p>
+<blockquote>
+<p>我喜欢讲一个另类二八定律，就是付出两成努力，了解一件事的八成。<br>
+既然我们的目标很明确，就是要从网页抓取数据。那么你需要掌握的<strong>最重要</strong>能力，是拿到一个网页链接后，如何从中快捷有效地抓取自己想要的信息。</p>
+</blockquote>
+<p>掌握了它，你还不能说自己已经学会了爬虫。</p>
+<p>但有了这个基础，你就能比之前更轻松获取数据了。特别是对“文科生”的很多应用场景来说，非常有用。这就是<strong>赋能</strong>。</p>
+<p>而且，再进一步深入理解爬虫的工作原理，也变得轻松许多。</p>
+<p>这也算“另类二八定律”的一个应用吧。</p>
+<p>Python语言的重要特色之一，就是可以利用强大的软件工具包（许多都是第三方提供）。你只需要编写简单的程序，就能自动解析网页，抓取数据。</p>
+<p>本文给你演示这一过程。</p>
+<h1>目标</h1>
+<p>要抓取网页数据，我们先制订一个小目标。</p>
+<p>目标不能太复杂。但是完成它，应该对你理解抓取（Web Scraping）有帮助。</p>
+<p>就选择我最近发布的一篇简书文章作为抓取对象好了。题目叫做《<a href="https://www.jianshu.com/p/85f4624485b9" target="_blank">如何用《玉树芝兰》入门数据科学？</a>》。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-962316.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-962316.png"><div class="image-caption"></div>
+</div>
+<p>这篇文章里，我把之前的发布的数据科学系列文章做了重新组织和串讲。</p>
+<p>文中包含很多之前教程的标题和对应链接。例如下图红色边框圈起来的部分。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-927654.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-927654.png"><div class="image-caption"></div>
+</div>
+<p>假设你对文中提到教程都很感兴趣，希望获得这些文章的链接，并且存储到Excel里，就像下面这个样子：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-936213.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-43-47-936213.png"><div class="image-caption"></div>
+</div>
+<p>你需要把非结构化的分散信息（自然语言文本中的链接），专门提取整理，并且存储下来。</p>
+<p>该怎么办呢？</p>
+<p>即便不会编程，你也可以全文通读，逐个去找这些文章链接，手动把文章标题、链接都分别拷贝下来，存到Excel表里面。</p>
+<p>但是，这种手工采集方法<strong>没有效率</strong>。</p>
+<p>我们用Python。</p>
+<h1>环境</h1>
+<p>要装Python，比较省事的办法是安装Anaconda套装。</p>
+<p>请到<a href="https://www.anaconda.com/download/" target="_blank" rel="nofollow">这个网址</a>下载Anaconda的最新版本。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-801080.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-801080.png"><div class="image-caption"></div>
+</div>
+<p>请选择左侧的 Python <strong>3.6</strong> 版本下载安装。</p>
+<p>如果你需要具体的步骤指导，或者想知道Windows平台如何安装并运行Anaconda命令，请参考我为你准备的<a href="https://www.jianshu.com/p/772740d57576" target="_blank">视频教程</a>。</p>
+<p>安装好Anaconda之后，请到<a href="https://github.com/wshuyi/demo-python-scrape-webpage-with-requests-html/archive/master.zip" target="_blank" rel="nofollow">这个网址</a>下载本教程配套的压缩包。</p>
+<p>下载后解压，你会在生成的目录（下称“演示目录”）里面看到以下三个文件。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-801703.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-801703.png"><div class="image-caption"></div>
+</div>
+<p>打开终端，用cd命令进入该<strong>演示目录</strong>。如果你不了解具体使用方法，也可以参考<a href="https://www.jianshu.com/p/772740d57576" target="_blank">视频教程</a>。</p>
+<p>我们需要安装一些环境依赖包。</p>
+<p>首先执行：</p>
+<pre><code>pip install pipenv
+</code></pre>
+<p>这里安装的，是一个优秀的 Python 软件包管理工具 pipenv 。</p>
+<p>安装后，请执行：</p>
+<pre><code>pipenv install
+</code></pre>
+<p>看到演示目录下两个Pipfile开头的文件了吗？它们就是 pipenv 的设置文档。</p>
+<p>pipenv 工具会依照它们，自动为我们安装所需要的全部依赖软件包。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-803003.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-803003.png"><div class="image-caption"></div>
+</div>
+<p>上图里面有个绿色的进度条，提示所需安装软件数量和实际进度。</p>
+<p>装好后，根据提示我们执行：</p>
+<pre><code>pipenv shell
+</code></pre>
+<p>此处请确认你的电脑上已经安装了 Google Chrome 浏览器。</p>
+<p>我们执行：</p>
+<pre><code>jupyter notebook
+</code></pre>
+<p>默认浏览器（Google Chrome）会开启，并启动 Jupyter 笔记本界面：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-804222.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-804222.png"><div class="image-caption"></div>
+</div>
+<p>你可以直接点击文件列表中的第一项ipynb文件，可以看到本教程的全部示例代码。</p>
+<p>你可以一边看教程的讲解，一边依次执行这些代码。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-805922.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-805922.png"><div class="image-caption"></div>
+</div>
+<p>但是，我<strong>建议</strong>的方法，是回到主界面下，新建一个新的空白 Python 3 笔记本。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-806907.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-806907.png"><div class="image-caption"></div>
+</div>
+<p>请跟着教程，一个个字符输入相应的内容。这可以帮助你更为深刻地理解代码的含义，更高效地把技能内化。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-807766.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-21-45-09-807766.png"><div class="image-caption"></div>
+</div>
+<p>准备工作结束，下面我们开始正式输入代码。</p>
+<h1>代码</h1>
+<p>读入网页加以解析抓取，需要用到的软件包是 requests_html 。我们此处并不需要这个软件包的全部功能，只读入其中的 HTMLSession 就可以。</p>
+<pre><code class="python">from requests_html import HTMLSession
+</code></pre>
+<p>然后，我们建立一个会话（session），即让Python作为一个客户端，和远端服务器交谈。</p>
+<pre><code class="python">session = HTMLSession()
+</code></pre>
+<p>前面说了，我们打算采集信息的网页，是《<a href="https://www.jianshu.com/p/85f4624485b9" target="_blank">如何用《玉树芝兰》入门数据科学？</a>》一文。</p>
+<p>我们找到它的网址，存储到url变量名中。</p>
+<pre><code class="python">url = 'https://www.jianshu.com/p/85f4624485b9'
+</code></pre>
+<p>下面的语句，利用 session 的 get 功能，把这个链接对应的网页整个儿取回来。</p>
+<pre><code class="python">r = session.get(url)
+</code></pre>
+<p>网页里面都有什么内容呢？</p>
+<p>我们告诉Python，请把服务器传回来的内容当作HTML文件类型处理。我不想要看HTML里面那些乱七八糟的格式描述符，只看文字部分。</p>
+<p>于是我们执行：</p>
+<pre><code class="python">print(r.html.text)
+</code></pre>
+<p>这就是获得的结果了：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-24-21-140063.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-24-21-140063.png"><div class="image-caption"></div>
+</div>
+<p>我们心里有数了。取回来的网页信息是正确的，内容是完整的。</p>
+<p>好了，我们来看看怎么趋近自己的目标吧。</p>
+<p>我们先用<strong>简单粗暴</strong>的方法，尝试获得网页中包含的全部链接。</p>
+<p>把返回的内容作为HTML文件类型，我们查看 links 属性：</p>
+<pre><code class="python">r.html.links
+</code></pre>
+<p>这是返回的结果：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-26-25-059092.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-26-25-059092.png"><div class="image-caption"></div>
+</div>
+<p>这么多链接啊！</p>
+<p>很兴奋吧？</p>
+<p>不过，你发现没有？这里许多链接，看似都不完全。例如第一条结果，只有：</p>
+<pre><code>'/'
+</code></pre>
+<p>这是什么东西？是不是链接抓取错误啊？</p>
+<p>不是，这种看着不像链接的东西，叫做相对链接。它是某个链接，相对于我们采集的网页所在域名（<a href="https://www.jianshu.com" target="_blank">https://www.jianshu.com</a>）的路径。</p>
+<p>这就好像我们在国内邮寄快递包裹，填单子的时候一般会写“XX省XX市……”，前面不需要加上国家名称。只有国际快递，才需要写上国名。</p>
+<p>但是如果我们希望获得全部可以直接访问的链接，怎么办呢？</p>
+<p>很容易，也只需要一条 Python 语句。</p>
+<pre><code class="python">r.html.absolute_links
+</code></pre>
+<p>这里，我们要的是“绝对”链接，于是我们就会获得下面的结果：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-31-15-237773.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-31-15-237773.png"><div class="image-caption"></div>
+</div>
+<p>这回看着是不是就舒服多了？</p>
+<p>我们的任务已经完成了吧？链接不是都在这里吗？</p>
+<p>链接确实都在这里了，可是跟我们的目标是不是有区别呢？</p>
+<p>检查一下，确实有。</p>
+<p>我们不光要找到链接，还得找到链接对应的描述文字呢，结果里包含吗？</p>
+<p>没有。</p>
+<p>结果列表中的链接，都是我们需要的吗？</p>
+<p>不是。看长度，我们就能感觉出许多链接并不是文中描述其他数据科学文章的网址。</p>
+<p>这种简单粗暴直接罗列HTML文件中所有链接的方法，对本任务行不通。</p>
+<p>那么我们该怎么办？</p>
+<p>我们得学会跟 Python 说清楚我们要找的东西。这是网页抓取的<strong>关键</strong>。</p>
+<p>想想看，如果你想让助手（人类）帮你做这事儿，怎么办？</p>
+<p>你会告诉他：</p>
+<p>“寻找正文中全部可以点击的蓝色文字链接，拷贝文字到Excel表格，然后右键复制对应的链接，也拷贝到Excel表格。每个链接在Excel占一行，文字和链接各占一个单元格。”</p>
+<p>虽然这个操作执行起来麻烦，但是助手听懂后，就能帮你执行。</p>
+<p>同样的描述，你试试说给电脑听……不好意思，它不理解。</p>
+<p>因为你和助手看到的网页，是这个样子的。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-42-24-952435.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-42-24-952435.png"><div class="image-caption"></div>
+</div>
+<p>电脑看到的网页，是这个样子的。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-43-10-688894.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-16-43-10-688894.png"><div class="image-caption"></div>
+</div>
+<p>为了让你看得清楚源代码，浏览器还特意对不同类型的数据用了颜色区分，对行做了编号。</p>
+<p>数据显示给电脑时，上述辅助可视功能是没有的。它只能看见一串串字符。</p>
+<p>那可怎么办？</p>
+<p>仔细观察，你会发现这些HTML源代码里面，文字、图片链接内容前后，都会有一些被尖括号括起来的部分，这就叫做“标记”。</p>
+<p>所谓HTML，就是一种标记语言（超文本标记语言，HyperText Markup Language）。</p>
+<p>标记的作用是什么？它可以把整个的文件分解出层次来。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-06-49-630506.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-06-49-630506.png"><div class="image-caption"></div>
+</div>
+<p>（图片来源：<a href="https://goo.gl/kWCqS6" target="_blank" rel="nofollow">https://goo.gl/kWCqS6</a>）</p>
+<p>如同你要发送包裹给某个人，可以按照“省-市-区-街道-小区-门牌”这样的结构来写地址，快递员也可以根据这个地址找到收件人。</p>
+<p>同样，我们对网页中某些特定内容感兴趣，可以依据这些标记的结构，顺藤摸瓜找出来。</p>
+<p>这是不是意味着，你必须先学会HTML和CSS，才能进行网页内容抓取呢？</p>
+<p>不是的，我们可以借助工具，帮你显著简化任务复杂度。</p>
+<p>这个工具，Google Chrome浏览器自带。</p>
+<p>我们在样例文章页面上，点击鼠标右键，在出现的菜单里面选择“检查”。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-11-50-177393.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-11-50-177393.png"><div class="image-caption"></div>
+</div>
+<p>这时，屏幕下方就会出现一个分栏。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-13-12-436452.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-13-12-436452.png"><div class="image-caption"></div>
+</div>
+<p>我们点击这个分栏左上角（上图红色标出）的按钮。然后把鼠标悬停在第一个文内链接（《玉树芝兰》）上面，点击一下。</p>
+<p></p>
+<p></p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-14-22-049544.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-14-22-049544.png"><div class="image-caption"></div>
+</div>
+<p>此时，你会发现下方分栏里面，内容也发生了变化。这个链接对应的源代码被放在分栏区域正中，高亮显示。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-16-04-532914.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-16-04-532914.png"><div class="image-caption"></div>
+</div>
+<p>确认该区域就是我们要找的链接和文字描述后，我们鼠标右键选择高亮区域，并且在弹出的菜单中，选择 Copy -&gt; Copy selector。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-17-45-788878.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-17-45-788878.png"><div class="image-caption"></div>
+</div>
+<p>找一个文本编辑器，执行粘贴，就可以看见我们究竟复制下来了什么内容。</p>
+<pre><code class="css">body &gt; div.note &gt; div.post &gt; div.article &gt; div.show-content &gt; div &gt; p:nth-child(4) &gt; a
+</code></pre>
+<p>这一长串的标记，为电脑指出了：请你先找到 body 标记，进入它管辖的这个区域后去找 <code>div.note</code> 标记，然后找……最后找到 a 标记，这里就是要找的内容了。</p>
+<p>回到咱们的 Jupyter Notebook 中，用刚才获得的标记路径，定义变量sel。</p>
+<pre><code class="python">sel = 'body &gt; div.note &gt; div.post &gt; div.article &gt; div.show-content &gt; div &gt; p:nth-child(4) &gt; a'
+</code></pre>
+<p>我们让 Python 从返回内容中，查找 sel 对应的位置，把结果存到 results 变量中。</p>
+<pre><code class="python">results = r.html.find(sel)
+</code></pre>
+<p>我们看看 results 里面都有什么。</p>
+<pre><code class="python">results
+</code></pre>
+<p>这是结果：</p>
+<pre><code>[&lt;Element 'a' href='https://www.jianshu.com/nb/130182' target='_blank'&gt;]
+</code></pre>
+<p>results 是个列表，只包含一项。这一项包含一个网址，就是我们要找的第一个链接（《玉树芝兰》）对应的网址。</p>
+<p>可是文字描述“《玉树芝兰》”哪里去了？</p>
+<p>别着急，我们让 Python 显示 results 结果数据对应的文本。</p>
+<pre><code class="python">results[0].text
+</code></pre>
+<p>这是输出结果：</p>
+<pre><code>'玉树芝兰'
+</code></pre>
+<p>我们把链接也提取出来：</p>
+<pre><code class="python">results[0].absolute_links
+</code></pre>
+<p>显示的结果却是一个集合。</p>
+<pre><code>{'https://www.jianshu.com/nb/130182'}
+</code></pre>
+<p>我们不想要集合，只想要其中的链接字符串。所以我们先把它转换成列表，然后从中提取第一项，即网址链接。</p>
+<pre><code class="python">list(results[0].absolute_links)[0]
+</code></pre>
+<p>这次，终于获得我们想要的结果了：</p>
+<pre><code>'https://www.jianshu.com/nb/130182'
+</code></pre>
+<p>有了处理这第一个链接的经验，你信心大增，是吧？</p>
+<p>其他链接，也无非是找到标记路径，然后照猫画虎嘛。</p>
+<p>可是，如果每找一个链接，都需要手动输入上面这若干条语句，那也太麻烦了。</p>
+<p>这里就是编程的技巧了。重复逐条运行的语句，如果工作顺利，我们就要尝试把它们归并起来，做个简单的函数。</p>
+<p>对这个函数，只需给定一个选择路径（sel），它就把找到的所有描述文本和链接路径都返回给我们。</p>
+<pre><code class="python">def get_text_link_from_sel(sel):
+    mylist = []
+    try:
+        results = r.html.find(sel)
+        for result in results:
+            mytext = result.text
+            mylink = list(result.absolute_links)[0]
+            mylist.append((mytext, mylink))
+        return mylist
+    except:
+        return None
+</code></pre>
+<p>我们测试一下这个函数。</p>
+<p>还是用刚才的标记路径（sel）不变，试试看。</p>
+<pre><code class="python">print(get_text_link_from_sel(sel))
+</code></pre>
+<p>输出结果如下：</p>
+<pre><code>[('玉树芝兰', 'https://www.jianshu.com/nb/130182')]
+</code></pre>
+<p>没问题，对吧？</p>
+<p>好，我们试试看第二个链接。</p>
+<p>我们还是用刚才的方法，使用下面分栏左上角的按钮点击第二个链接。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-34-07-255683.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-34-07-255683.png"><div class="image-caption"></div>
+</div>
+<p>下方出现的高亮内容就发生了变化：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-33-33-680068.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-33-33-680068.png"><div class="image-caption"></div>
+</div>
+<p>我们还是用鼠标右键点击高亮部分，拷贝出 selector。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-35-02-842966.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-35-02-842966.png"><div class="image-caption"></div>
+</div>
+<p>然后我们直接把获得的标记路径写到 Jupyter Notebook 里面。</p>
+<pre><code class="python">sel = 'body &gt; div.note &gt; div.post &gt; div.article &gt; div.show-content &gt; div &gt; p:nth-child(6) &gt; a'
+</code></pre>
+<p>用我们刚才编制的函数，看看输出结果是什么？</p>
+<pre><code class="python">print(get_text_link_from_sel(sel))
+</code></pre>
+<p>输出如下：</p>
+<pre><code>[('如何用Python做词云？', 'https://www.jianshu.com/p/e4b24a734ccc')]
+</code></pre>
+<p>检验完毕，函数没有问题。</p>
+<p>下一步做什么？</p>
+<p>你还打算去找第三个链接，仿照刚才的方法做？</p>
+<p>那你还不如全文手动摘取信息算了，更省事儿一些。</p>
+<p>我们要想办法把这个过程<strong>自动化</strong>。</p>
+<p>对比一下刚刚两次我们找到的标记路径：</p>
+<pre><code class="css">body &gt; div.note &gt; div.post &gt; div.article &gt; div.show-content &gt; div &gt; p:nth-child(4) &gt; a
+</code></pre>
+<p>以及：</p>
+<pre><code class="css">body &gt; div.note &gt; div.post &gt; div.article &gt; div.show-content &gt; div &gt; p:nth-child(6) &gt; a
+</code></pre>
+<p>发现什么规律没有？</p>
+<p>对，路径上其他的标记全都是一样的，唯独倒数第二个标记（"p"）后冒号后内容有区别。</p>
+<p>这就是我们自动化的关键了。</p>
+<p>上述两个标记路径里面，因为指定了在第几个“子”(<code>nth-child</code>)文本段（paragraph,也就是"p"代表的含义）去找"a"这个标记，因此只返回来单一结果。</p>
+<p>如果我们不限定"p"的具体位置信息呢？</p>
+<p>我们试试看，这次保留标记路径里面其他全部信息，只修改"p"这一点。</p>
+<pre><code class="python">sel = 'body &gt; div.note &gt; div.post &gt; div.article &gt; div.show-content &gt; div &gt; p &gt; a'
+</code></pre>
+<p>再次运行我们的函数：</p>
+<pre><code class="python">print(get_text_link_from_sel(sel))
+</code></pre>
+<p>这是输出结果：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-04-07-48-38-603409.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-04-07-48-38-603409.png"><div class="image-caption"></div>
+</div>
+<p>好了，我们要找的内容，全都在这儿了。</p>
+<p>但是，我们的工作还没完。</p>
+<p>我们还得把采集到的信息输出到Excel中保存起来。</p>
+<p>还记得我们常用的数据框工具 Pandas 吗？又该让它大显神通了。</p>
+<pre><code class="python">import pandas as pd
+</code></pre>
+<p>只需要这一行命令，我们就能把刚才的列表变成数据框：</p>
+<pre><code class="python">df = pd.DataFrame(get_text_link_from_sel(sel))
+</code></pre>
+<p>让我们看看数据框内容：</p>
+<pre><code class="python">df
+</code></pre>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-54-03-439993.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-54-03-439993.png"><div class="image-caption"></div>
+</div>
+<p>内容没问题，不过我们对表头不大满意，得更换为更有意义的列名称：</p>
+<pre><code class="python">df.columns = ['text', 'link']
+</code></pre>
+<p>再看看数据框内容：</p>
+<pre><code class="python">df
+</code></pre>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-55-02-015623.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-55-02-015623.png"><div class="image-caption"></div>
+</div>
+<p>好了，下面就可以把抓取的内容输出到Excel中了。</p>
+<p>Pandas内置的命令，就可以把数据框变成csv格式，这种格式可以用Excel直接打开查看。</p>
+<pre><code class="python">df.to_csv('output.csv', encoding='gbk', index=False)
+</code></pre>
+<p>注意这里需要指定encoding（编码）为gbk，否则默认的utf-8编码在Excel中查看的时候，有可能是乱码。</p>
+<p>我们看看最终生成的csv文件吧。</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-58-17-057507.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-17-58-17-057507.png"><div class="image-caption"></div>
+</div>
+<p>很有成就感，是不是？</p>
+<h1>小结</h1>
+<p>本文为你展示了用Python自动网页抓取的基础技能。希望阅读并动手实践后，你能掌握以下知识点：</p>
+<ul>
+<li>网页抓取与网络爬虫之间的联系与区别；</li>
+<li>如何用 pipenv 快速构建指定的 Python 开发环境，自动安装好依赖软件包；</li>
+<li>如何用 Google Chrome 的内置检查功能，快速定位感兴趣内容的标记路径；</li>
+<li>如何用 requests-html 包来解析网页，查询获得需要的内容元素；</li>
+<li>如何用 Pandas 数据框工具整理数据，并且输出到 Excel。</li>
+</ul>
+<p>或许，你觉得这篇文章过于浅白，不能满足你的要求。</p>
+<p>文中只展示了如何从一个网页抓取信息，可你要处理的网页成千上万啊。</p>
+<p>别着急。</p>
+<p>本质上说，抓取一个网页，和抓取10000个网页，在流程上是一样的。</p>
+<p>而且，从咱们的例子里，你是不是已经尝试了抓取链接？</p>
+<p>有了链接作为基础，你就可以滚雪球，让Python爬虫“爬”到解析出来的链接上，做进一步的处理。</p>
+<p>将来，你可能还要应对实践场景中的一些棘手问题：</p>
+<ul>
+<li>如何把抓取的功能扩展到某一范内内的所有网页？</li>
+<li>如何爬取Javascript动态网页？</li>
+<li>假设你爬取的网站对每个IP的访问频率做出限定，怎么办？</li>
+<li>……</li>
+</ul>
+<p>这些问题的解决办法，我希望在今后的教程里面，一一和你分享。</p>
+<p>需要注意的是，网络爬虫抓取数据，虽然功能强大，但学习与实践起来有一定门槛。</p>
+<p>当你面临数据获取任务时，应该先检查一下这个清单：</p>
+<ul>
+<li>有没有别人已经整理好的数据集合可以直接下载？</li>
+<li>网站有没有对你需要的数据提供API访问与获取方式？</li>
+<li>有没有人针对你的需求，编好了定制爬虫，供你直接调用？</li>
+</ul>
+<p>如果答案是都没有，才需要你自己编写脚本，调动爬虫来抓取。</p>
+<p>为了巩固学习的知识，请你换一个其他网页，以咱们的代码作为基础修改后，抓取其中你感兴趣的内容。</p>
+<p>如果能把你抓取的过程记录下来，在评论区将记录链接分享给大家，就更好了。</p>
+<p>因为<strong>刻意练习</strong>是掌握实践技能的最好方式，而<strong>教是最好的学</strong>。</p>
+<p>祝顺利！</p>
+<h1>思考</h1>
+<p>本文主要内容讲解完毕。</p>
+<p>这里给你提一个疑问，供你思考：</p>
+<p>我们解析并且存储的链接，其实是有重复的：</p>
+<div class="image-package">
+<img src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-18-24-726975.png" data-original-src="https://wphoto-1255363720.cosbj.myqcloud.com/2018-03-03-18-18-24-726975.png"><div class="image-caption"></div>
+</div>
+<p>这并不是我们的代码有误，而是在《<a href="https://www.jianshu.com/p/85f4624485b9" target="_blank">如何用《玉树芝兰》入门数据科学？</a>》一文里，本来就多次引用过一些文章，所以重复的链接就都被抓取出来了。</p>
+<p>但是你存储的时候，也许不希望保留重复链接。</p>
+<p>这种情况下，你该如何修改代码，才能保证抓取和保存的链接没有重复呢？</p>
+<p>我把这一部分内容，放到了文末的付费阅读区域。如果你愿意支持我的数据科学系列教程写作，顺便核对一下你的代码是不是比我的更高效，只需支付<strong>2块钱</strong>（推广期价格），阅读该部分内容。</p>
+<h1>讨论</h1>
+<p>你对Python爬虫感兴趣吗？在哪些数据采集任务上使用过它？有没有其他更高效的方式，来达成数据采集目的？欢迎留言，把你的经验和思考分享给大家，我们一起交流讨论。</p>
+<p>如果你对我的文章感兴趣，欢迎点赞，并且微信关注和置顶我的公众号“玉树芝兰”(nkwangshuyi)。</p>
+<p>如果本文可能对你身边的亲友有帮助，也欢迎你把本文通过微博或朋友圈分享给他们。让他们一起参与到我们的讨论中来。</p>
+          </div>
+            <div data-vcomp="note-content-divide"></div>
+        </div>
+    </div>
+
+    <!-- 如果是付费文章，未购买，则显示购买按钮 -->
+      <div data-vcomp="buy-note-panel"></div>
+
+    <!-- 连载目录项 -->
+      <div class="book-menu">
+        <div class="menu-item">
+            <a href="/p/563486c2889c">
+              <i class="iconfont ic-previous-s"></i>上一篇
+            </a>
+        </div>
+        <div class="menu-item">
+          <a id="openBookChapterBtn" href="javascript:;">目录</a>
+        </div>
+        <div class="menu-item">
+            <a href="/p/53f0020ca248">
+              下一篇<i class="iconfont ic-next-s"></i>
+            </a>
+        </div>
+      </div>
+      <div data-vcomp="book-chapters-modal" props-data-book-id="1150" props-data-slug="ba02079ecd2f" props-data-order="desc"></div>
+
+    <!-- 如果是付费文章 -->
+      <!-- 已购买，且作者允许赞赏，则显示付费信息和赞赏 -->
+
+      <div class="show-foot">
+        <a class="notebook" href="/nb/130182">
+          <i class="iconfont ic-search-notebook"></i>
+          <span>玉树芝兰</span>
+</a>        <div class="copyright" data-toggle="tooltip" data-html="true" data-original-title="转载请联系作者获得授权，并标注“简书作者”。">
+          © 著作权归作者所有
+        </div>
+        <div class="modal-wrap" data-report-note>
+          <a id="report-modal">举报文章</a>
+        </div>
+      </div>
+
+      <!-- 文章底部连载信息 -->
+        <div id="note-book-info">
+          <a href="/nb/130182" class="banner">
+            <img src="//upload.jianshu.io/book/image/53ae9b43-387d-4007-8a10-7a07fc93afed.jpg" alt="">
+          </a>
+          <div class="info">
+            <a href="/nb/130182" class="title">
+              玉树芝兰
+            </a>
+            <div class="meta">
+              <span>48.0万字 </span>
+              ·
+              <span>76.5万阅读</span>
+              ·
+              <span>1363人关注</span>
+            </div>
+            <div class="summary">
+                
+            </div>
+            <div class="follow-button" props-data-notebook-id="130182" props-data-following="false"></div>
+          </div>
+        </div>
+
+    <div class="meta-bottom">
+      <div class="btn like-group"></div>
+      <div class="share-group">
+        <a class="share-circle" data-action="weixin-share" data-toggle="tooltip" data-original-title="分享到微信">
+          <i class="iconfont ic-wechat"></i>
+        </a>
+        <a class="share-circle" data-action="weibo-share" data-toggle="tooltip" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;&#39;, &#39;推荐 @nkwshuyi 的文章《如何用Python爬数据？（一）网页抓取》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/ba02079ecd2f?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-original-title="分享到微博">
+          <i class="iconfont ic-weibo"></i>
+        </a>
+        <a class="share-circle" data-toggle="tooltip"  id="longshare" target="_blank">
+            <div class="qrcode" id="qrcode">
+             <img src="//cdn2.jianshu.io/assets/web/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png" alt="Download index side qrcode" />
+             <p>下载app生成长微博图片</p>
+             </div>
+          <i class="iconfont ic-picture"></i>
+        </a>
+        <a class="share-circle more-share" tabindex="0" data-toggle="popover" data-placement="top" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content='
+          <ul class="share-list">
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/ba02079ecd2f?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 王树义 的文章《如何用Python爬数据？（一）网页抓取》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-zone"></i><span>分享到QQ空间</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/ba02079ecd2f?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 王树义 的文章《如何用Python爬数据？（一）网页抓取》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-twitter"></i><span>分享到Twitter</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/ba02079ecd2f?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-facebook"></i><span>分享到Facebook</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/ba02079ecd2f?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-google"></i><span>分享到Google+</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/ba02079ecd2f?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;如何用Python爬数据？（一）网页抓取&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><i class="social-icon-sprite social-icon-douban"></i><span>分享到豆瓣</span></a></li>
+          </ul>
+        '>更多分享</a>
+      </div>
+    </div>
+
+      <a id="web-note-ad-1" target="_blank" href="/apps/redirect?utm_source=note-bottom-click"><img src="//cdn2.jianshu.io/assets/web/web-note-ad-1-c2e1746859dbf03abe49248893c9bea4.png" alt="Web note ad 1" /></a>
+
+    <!--
+    <div id="note-comment-above-ad-container">
+      <span id="youdao-comment-ad" class="ad-badge">广告</span>
+    </div>
+    -->
+    <div id="vue_comment"></div>
+  </div>
+
+  <div class="vue-side-tool" props-data-props-show-qr-code="0"></div>
+</div>
+<div class="note-bottom">
+  <div class="js-included-collections"></div>
+  <div data-vcomp="recommended-notes" data-lazy="1.5" data-note-id="24704801"></div>
+  <!-- 相关文章 -->
+    <!-- 未登录用户 -->
+    <div class="seo-recommended-notes">
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/047b4dd3f911?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Python爬虫学习手册</a>
+            <p class="description">爬虫文章 in 简书程序员专题： like:128-Python 爬取落网音乐 like:127-【图文详解】python爬虫实战——5分钟做个图片自动下载器 like:97-用Python写一个简单的微博爬虫 like:87-爬虫抓取拉勾网职位需求关键词，并生成统计图 l...</p>
+            <a class="author" target="_blank" href="/u/324165d32970?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/6857392/4e5e5e58-5195-46d4-a834-bdce8af8cb2a.JPEG?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">喜欢吃栗子</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/a166e63544d8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Python--Flask Django等常用库总结</a>
+            <p class="description"># Python 资源大全中文版 我想很多程序员应该记得 GitHub 上有一个 Awesome - XXX 系列的资源整理。[awesome-python](https://link.jianshu.com?t=https%3A%2F%2Fgithub.com%2Fvin...</p>
+            <a class="author" target="_blank" href="/u/f8ed0b1f76ef?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//cdn2.jianshu.io/assets/default_avatar/5-33d2da32c552b8be9a0548c7a4576607.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">aimaile</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/380fd577d00d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">#阅读打卡1/21#</a>
+            <p class="description">#阅读打卡1/21# 不会说话你就输了-墨陌 能说会道可以带来人气、好运气、和财气。说话作为最简单及最直接的表达方式，它的重要性不言而喻。 这本书陆陆续续的看了一点，一直没坚持。分各个章节教会我们在何种情况下应该如何说话。可能一直没走心记到脑袋里，所以说话技巧并没有提高。在...</p>
+            <a class="author" target="_blank" href="/u/d2e496bf6d84?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/7974065/01dacc1a-c4fd-4550-8064-0abe99ee7697.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">给自己的时光</span>
+</a>          </div>
+
+          <div class="note have-img">
+            <a class="cover" target="_blank" href="/p/84d1040cc032?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <img src="//upload-images.jianshu.io/upload_images/5062364-a73272b0e5e29038.png?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240" alt="240" />
+</a>            <a class="title" target="_blank" href="/p/84d1040cc032?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">从0开始：开发自己的游戏[4]</a>
+            <p class="description">我是Lem0，自学倡导者，执迷于“不务正业”，被批评“旁门左道”。我注册并使用简书，希望能够记录一些我记不住的事情，或者与大家一起共享知识，共同学习。 往期回顾（点击链接访问）：「从0开始：开发自己的游戏[0]」「从0开始：开发自己的游戏[1]」「从0开始：开发自己的游戏[...</p>
+            <a class="author" target="_blank" href="/u/022e3a1bae8e?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/5062364/2768c255-41f0-4cfc-b50b-73b761e8a76c.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">Lem0</span>
+</a>          </div>
+
+          <div class="note have-img">
+            <a class="cover" target="_blank" href="/p/c4a4091ad6ec?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <img src="//upload-images.jianshu.io/upload_images/6101662-defe89c633d83594.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240" alt="240" />
+</a>            <a class="title" target="_blank" href="/p/c4a4091ad6ec?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">罗拉之死</a>
+            <p class="description">文|无喧 “我愿意代替他的双眼，看遍繁花似锦，云卷云舒。我愿意代替他的双脚，踏遍天涯海角，山川万里。。。。死生契阔，与子成说 ，执子之手，与子偕老 ” 随着全剧终的字样缓缓出现，何幽惆怅地叹了一口气，就这样完结了呀，真不甘心，电视剧总是这样，终有完结的一天，但是生活呢，这操...</p>
+            <a class="author" target="_blank" href="/u/678e6a7a0011?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/6101662/14047340-b367-42c0-a22a-47ee70efd365.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">岑思木</span>
+</a>          </div>
+
+          <div class="note have-img">
+            <a class="cover" target="_blank" href="/p/7ab76ade9f11?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <img src="//upload-images.jianshu.io/upload_images/3839671-b179b1c2fc5978c1.jpeg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240" alt="240" />
+</a>            <a class="title" target="_blank" href="/p/7ab76ade9f11?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">最好的值得等待</a>
+            <p class="description">有的 时候会问自己：喜欢一个人是什么样的感觉？人们为什么要去喜欢一个人？又是因为什么喜欢这个人？看着身边一对对情侣们秀恩爱的时候，总是会很羡慕他们，同时也在悲叹身为单身贵族的自己什么时候才能找到那个只属于我的骑士。 身边的朋友总是在怨叹这个世界是怎么了？一个相貌身材普普通通...</p>
+            <a class="author" target="_blank" href="/u/59e04d5a69f7?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/3839671/4dd88f2b5628?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">知世俗而不世俗</span>
+</a>          </div>
+
+          <div class="note ">
+                        <a class="title" target="_blank" href="/p/e4f015620a84?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">5年在朗阁 确实累 但不后悔</a>
+            <p class="description">我其实常常在想一个问题，如果第一年来朗阁的时候就听郭姐的安排去做一个老师，现在会怎么样？ 会一直教课到现在吗？不会，真的不会！ 其实就算当时做了老师，后期如果有机会我依然还是会去选择来尝试一下自己想去做的事情，这并不是某个转折就能去改变的，所以现在我不会去说要是当时我怎么着...</p>
+            <a class="author" target="_blank" href="/u/37986c8e9967?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+              <div class="avatar">
+                <img src="//upload.jianshu.io/users/upload_avatars/4416550/5ce1f1819144.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/48/h/48" alt="48" />
+              </div>
+              <span class="name">张小主Ellen</span>
+</a>          </div>
+    </div>
+</div>
+
+    <script type="application/json" data-name="page-data">{"user_signed_in":false,"locale":"zh-CN","os":"windows","read_mode":"day","read_font":"font2","note_show":{"is_author":false,"is_following_author":false,"is_liked_note":false,"follow_state":0,"uuid":"39fda0f9-8014-4385-967c-9c551b23607d"},"note":{"id":24704801,"slug":"ba02079ecd2f","user_id":64542,"notebook_id":130182,"commentable":true,"likes_count":128,"views_count":32086,"public_wordage":6357,"comments_count":16,"featured_comments_count":1,"total_rewards_count":0,"is_author":false,"paid_type":"fbook_paid","paid":true,"paid_content_accessible":false,"author":{"nickname":"王树义","total_wordage":480466,"followers_count":62208,"total_likes_count":9935},"retail_price":200,"purchased_count":28,"distribution_more_earn_percent":24,"paid_content_percent":"6%"}}</script>
+    
+    <script src="//cdn2.jianshu.io/assets/babel-polyfill-6cd2d6b53fe3184b71cc.js" crossorigin="anonymous"></script>
+    <script src="//cdn2.jianshu.io/assets/web-base-fce9dfdeffea43617fa3.js" crossorigin="anonymous"></script>
+<script src="//cdn2.jianshu.io/assets/web-816b8e1cf8c21bb1895d.js" crossorigin="anonymous"></script>
+    
+    <script src="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-b0c6dee10b4c6c65f9fa.js" crossorigin="anonymous"></script>
+    <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+  </body>
+</html>
